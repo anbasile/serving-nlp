@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  trtserver:
+    image: nvcr.io/nvidia/tensorrtserver:20.02-py3
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    volumes:
+      - "./model_repository:/models"
+    shm_size: '1gb'
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    command: trtserver --model-repository=/models --strict-model-config=false --tf-allow-soft-placement=true
